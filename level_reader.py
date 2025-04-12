@@ -1,26 +1,6 @@
-from tkinter import Tk, Canvas
+from tkinter import Tk, Canvas, Menu, Label, Button
 from interface import Interface, Lever
-
-class Level:
-    def __init__ (self):
-        self.w = Tk()
-        self.w.resizable (0,0)
-
-    def make_level (self, title, height, width, canl):
-        self.w.title (title)
-        for ca in canl:
-            if ca[2] == True:
-                terface_ = Interface()
-                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
-                Lever().create_levers (terface_.can_,height,width)
-                    
-            else:
-                terface_ = Interface()
-                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
-
-    def end_ (self):    
-        self.w.mainloop()
-
+import os
 
 def read_level (filename):
     with open (filename) as levl:
@@ -62,3 +42,71 @@ def read_level (filename):
             can_list.append ([ int(i.split(",")[0]),int (i.split(",")[1]), False ] )
             
     return tit, hi, wi, can_list
+
+
+class Level:
+    def __init__ (self):
+        self.w = Tk()
+        self.w.resizable (0,0)
+        self.can_list = []
+        
+    def about_ (self):
+       self.abt = Tk()
+       self.abt.title ("About")
+       self.abt.resizable (0,0)
+       abt_text = Label (self.abt, text ="Levers !!",font = "Serif, 30")
+       abt_text.pack(padx = 20, pady = 10)
+       
+       abt_btn = Button (self.abt, text ="Exit",font = "Serif, 15",command = self.abt.destroy)
+       abt_btn.pack(padx = 20, pady = 10)
+
+       self.abt.mainloop()
+       
+    def menu_ (self):
+        self.men_  = Menu (self.w)
+        self.w.config (menu = self.men_)
+        dir_list = os.listdir ("./levels/")
+        men_lev = Menu (self.men_, tearoff = 0)
+        
+        for i, btn_lev in enumerate (dir_list [ dir_list.index("Guide_To_Writing.txt") + 1 : ]) :
+            self.btn_i = men_lev.add_radiobutton (label=btn_lev)
+            men_lev.entryconfig(i, command=lambda btn_lev=btn_lev: self.next_er(btn_lev))
+            
+        men_abt = Menu (self.men_, tearoff = 0)
+        men_abt.add_command (label="About", command = self.about_)
+        men_abt.add_separator()
+        men_abt.add_command (label="Quit", command = self.w.destroy)
+
+        self.men_.add_cascade (menu = men_lev,label="Levels")
+        self.men_.add_cascade (menu = men_abt,label="About")
+            
+    def next_er (self, fname):
+        self.reload ()
+        options = read_level ("./levels/" + fname)
+        self.make_level (options[0],options[1],options[2],options[3])
+        
+    def make_level (self, title, height, width, canl):
+        self.w.title (title)
+        for ca in canl:
+            if ca[2] == True:
+                terface_ = Interface()
+                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
+                Lever().create_levers (terface_.can_,height,width)
+                self.can_list.append (terface_.can_)
+                    
+            else:
+                terface_ = Interface()
+                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
+                self.can_list.append (terface_.can_)
+        
+    def reload (self):
+        self.w.title ("")
+
+        for can in self.can_list:
+            can.destroy ()
+            
+        self.w.update()
+        
+    def end_ (self):    
+        self.w.mainloop()
+
