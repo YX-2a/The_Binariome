@@ -55,7 +55,7 @@ class Level:
        self.abt = Tk()
        self.abt.title ("About")
        self.abt.resizable (0,0)
-       abt_text = Label (self.abt, text ="Levers !!",font = "Serif, 30")
+       abt_text = Label (self.abt, text =" The Binariome ",font = "Serif, 30")
        abt_text.pack(padx = 20, pady = 10)
        
        abt_btn = Button (self.abt, text ="Exit",font = "Serif, 15",command = self.abt.destroy)
