@@ -46,9 +46,11 @@ def read_level (filename):
 
 
 class Level:
-    def __init__ (self, lvl_dir, hlp_img, def_lvl, skp_gd):
+    def __init__ (self, lvl_dir, hlp_img, def_lvl, skp_gd,icon_img):
         self.w = Tk()
         self.w.resizable (0,0)
+        self.icon_img = PhotoImage (file = icon_img)
+        self.w.iconphoto (0, self.icon_img)
         self.can_list = []
         self.ext = lvl_dir
         self.dre = os.listdir (self.ext) 

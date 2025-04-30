@@ -7,7 +7,8 @@ if __name__ == "__main__" :
         cf_dict[0]["levels_directory"]
         ,cf_dict[1]["help_image"]
         ,cf_dict[2]["default_level"]
-        ,cf_dict[3]["skip_guide"])
+        ,cf_dict[3]["skip_guide"]
+        ,cf_dict[4]["icon_image"])
 
     
     options = lr.read_level(cf_dict[0]["levels_directory"] + cf_dict[2]["default_level"])

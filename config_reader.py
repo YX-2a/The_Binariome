@@ -19,5 +19,6 @@ def read_config (file):
     return [ {"levels_directory" : cf_lst[0] },
              {"help_image" : cf_lst[1] },
              {"default_level" : cf_lst[2] },
-             {"skip_guide" : cf_lst[3] } ]
+             {"skip_guide" : cf_lst[3] },
+             {"icon_image" : cf_lst[4] }]
 
