@@ -46,20 +46,22 @@ def read_level (filename):
 
 
 class Level:
-    def __init__ (self):
+    def __init__ (self, lvl_dir, hlp_img, def_lvl, skp_gd):
         self.w = Tk()
         self.w.resizable (0,0)
         self.can_list = []
-        self.ext = "./levels/"
+        self.ext = lvl_dir
         self.dre = os.listdir (self.ext) 
-        self.fname = self.dre[ self.dre.index("Guide_To_Writing.txt") + 1 : ][0]
+        self.fname = def_lvl
+        self.skp_gd = skp_gd
+        self.hlp_img = hlp_img
         
     def about_ (self):
        self.abt = Toplevel(self.w)
        self.abt.title ("About")
        self.abt.resizable (0,0)
        
-       self.img = PhotoImage (file= "./readme_pic/logograph.png").subsample(2, 2)
+       self.img = PhotoImage (file=self.hlp_img).subsample(2, 2)
        abt_text = Label (self.abt, image = self.img)
 
        abt_text.pack()
@@ -70,7 +72,7 @@ class Level:
         self.w.config (menu = self.men_)
         men_lev = Menu (self.men_, tearoff = 0)
         
-        for i, btn_lev in enumerate (self.dre [ self.dre.index("Guide_To_Writing.txt") + 1 : ]) :
+        for i, btn_lev in enumerate (self.dre [ self.dre.index(self.skp_gd) + 1 : ]) :
             self.btn_i = men_lev.add_radiobutton (label=btn_lev)
             men_lev.entryconfig(i, command=lambda btn_lev=btn_lev: self.next_er(btn_lev))
             

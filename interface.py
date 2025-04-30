@@ -46,10 +46,10 @@ class Lever:
 
 class Interface:
     def __init__ (self):
-        self.color = "#aaaaaa"
+        self.color_bg = "#aaaaaa"
         self.color_line = "#909090"
         
     def create_canvas (self,parent, height, width, book, shelf):
-        self.can_ = Canvas (parent, height = height, width = width,bg = self.color )
+        self.can_ = Canvas (parent, height = height, width = width,bg = self.color_bg )
         self.lien_ = self.can_.create_line (width//2,height//20,width//2,height - height//20,width = 5, fill = self.color_line)
         self.can_.grid (column = book,row = shelf)
