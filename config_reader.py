@@ -1,24 +1,30 @@
-def read_config (file):
-    with open (file) as cog:
-        cflst = cog.readlines()
+def raw_values (iter_):
+    n_iter_ = []
 
-    cflst =  [ i.strip() for i in cflst ]
-
-    cf_lst = []
-
-    for i in cflst:
+    for i in iter_:
         for n in i:
             if n == "=":
                 i = i[ i.index("=") + 1 : ]
 
             else:
                 continue
+        
+        n_iter_.append (i)
 
-        cf_lst.append (i)
+    return n_iter_
 
-    return [ {"levels_directory" : cf_lst[0] },
-             {"help_image" : cf_lst[1] },
-             {"default_level" : cf_lst[2] },
-             {"skip_guide" : cf_lst[3] },
-             {"icon_image" : cf_lst[4] }]
+def read_config (file):
+    with open (file) as cog:
+        cflst = cog.readlines()
+
+    cflst =  [ i.strip() for i in cflst ]
+
+    lvlsf = cflst [cflst.index ("[Level Conf]") + 1 : cflst.index("[Canvas Conf]")]
+    cvlsf = cflst [cflst.index ("[Canvas Conf]") + 1 : ]
+
+    lvl_sf = raw_values (lvlsf)
+    cv_sf = raw_values (cvlsf)
+
+    return [ {"lvl_dir":lvl_sf[0],"hlp_img":lvl_sf[1],"def_lvl":lvl_sf[2],"skip_gd":lvl_sf[3],"ico_img":lvl_sf[4]}
+             , {"bg_clr":cv_sf[0],"ib_clr":cv_sf[1],"fg_clr":cv_sf[2]} ]
 
