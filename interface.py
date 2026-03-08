@@ -18,6 +18,7 @@ class Lever  :
         self.switc_ = None
         self.num_ = 0
         self.canvas = ""
+        self.bbox_pad = 20
         
     def create_levers (self,canvas,height,width,pow_):
         self.canvas = canvas
@@ -31,7 +32,7 @@ class Lever  :
 
     def change_ (self, heh):
         if self.switc_:
-            if heh.x  in range (round(self.cords2[0]), round(self.cords2[2])) and heh.y in range (round(self.cords2[1]),round(self.cords2[3])):
+            if heh.x  in range (round(self.cords2[0] - self.bbox_pad), round(self.cords2[2] + self.bbox_pad)) and heh.y in range (round(self.cords2[1] - self.bbox_pad),round(self.cords2[3] + self.bbox_pad)):
                 self.canvas.delete (self.actif_)
                 self.actif_ = self.canvas.create_rectangle (self.cords, fill = self.color, outline = self.color)
 
@@ -44,7 +45,7 @@ class Lever  :
                 return None
                 
         else:
-            if heh.x  in range (round(self.cords[0]), round(self.cords[2])) and heh.y in range (round(self.cords[1]),round(self.cords[3])):
+            if heh.x  in range (round(self.cords[0] - self.bbox_pad), round(self.cords[2] + self.bbox_pad)) and heh.y in range (round(self.cords[1] - self.bbox_pad),round(self.cords[3] + self.bbox_pad)):
                 self.canvas.delete (self.actif_)
                 self.actif_ = self.canvas.create_rectangle (self.cords2, fill = self.color2, outline = self.color2)
 

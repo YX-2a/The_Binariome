@@ -61,12 +61,18 @@ class Level:
     def make_level (self, title, height, width, gl, canl):
         self.w.title (title + " | Goal : " + str(gl))
         self.opera_ = 0
-        for ca in canl:
+        self.power = 0
+        for i, ca in enumerate(canl):
+            self.power = i
+            if i % ca[4] == 0:
+                self.power = i + 2
+            elif (i-2) % ca[4] == 0:
+                self.power = i - 2
             if ca[2] == True:
                 terface_ = Interface(self.bcl, self.icl, self.fcl)
                 terface_.create_canvas (self.w,height,width,ca[1],ca[0])
                 lever_= Lever(terface_)
-                lever_.create_levers (terface_.can_,height,width,canl.index(ca))
+                lever_.create_levers (terface_.can_,height,width,self.power)
                 self.can_list.append (terface_.can_)
 
                 def handle (heh, lev=lever_):

@@ -24,18 +24,21 @@ def read_level (filename):
     wi = int(levl_uck[2].replace ("w:",""))
     gl = int(levl_uck[3].replace ("g:",""))
     levl_uck = levl_uck[4:]
+	
+    k = levl_uck[-1]
+    k = k[k.index(":")+1:]
+    k = k[:3]
+    k = [int(i) for i in k.split(",")]
+	
+    row_max = k[0] + 1
+    col_max = k[1] + 1
 
     for i in levl_uck:
-        for car in i:
-            i = i[i.index(car):]
-            if car == ":":
-                i = i[i.index(":") + 1:]
-                break
-
+        i = i[i.index(":") + 1:]
         if ",l" in i:
-            can_list.append ( [ int (i[:i.index(",l")].split(",")[0]),int (i[:i.index(",l")].split(",")[1]), True ])
+            can_list.append ( [ int (i[:i.index(",l")].split(",")[0]),int (i[:i.index(",l")].split(",")[1]), True, row_max, col_max ])
 
         else:
-            can_list.append ([ int(i.split(",")[0]),int (i.split(",")[1]), False ] )
+            can_list.append ([int(i.split(",")[0]),int (i.split(",")[1]), False, row_max, col_max] )
             
     return tit, hi, wi, gl, can_list
