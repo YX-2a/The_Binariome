@@ -51,6 +51,8 @@ class Level:
         self.men_.add_cascade (menu = men_lev,label="Levels")
         self.men_.add_command (label="Refresh", command = lambda nibler = self.fname : self.next_er (self.fname) )
         self.men_.add_cascade (menu = men_abt,label="About")
+		
+        return self.men_
             
     def next_er (self, fname):
         self.reload ()
