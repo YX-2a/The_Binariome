@@ -23,36 +23,28 @@ class Lever  :
     def create_levers (self,canvas,height,width,pow_):
         self.canvas = canvas
         self.pow_ = pow_
-        self.cords2 = [width//2 - width//10,height*(10/13),width//2 + width//10,height*(10/13) + height//8]
+        self.cord2 = [width//2 - width//10,height*(10/13),width//2 + width//10,height*(10/13) + height//8]
         self.cords = [width//2 - width//10,height//10,width//2 + width//10,height//10 + height//8]
         self.color = self.inter_father.color_lvr
-        self.color2 = self.color
-        self.actif_ = self.canvas.create_rectangle (self.cords2, fill = self.color, outline = self.color)
+        self.lvid = self.canvas.create_rectangle (self.cord2, fill = self.color, outline = self.color)
         self.switc_ = True
 
     def change_ (self, heh):
         if self.switc_:
-            if heh.x  in range (round(self.cords2[0] - self.bbox_pad), round(self.cords2[2] + self.bbox_pad)) and heh.y in range (round(self.cords2[1] - self.bbox_pad),round(self.cords2[3] + self.bbox_pad)):
-                self.canvas.delete (self.actif_)
-                self.actif_ = self.canvas.create_rectangle (self.cords, fill = self.color, outline = self.color)
+            if heh.x in range (round(self.cord2[0] * 0.888), round(self.cord2[2] * 1.07)) and heh.y in range (round(self.cord2[1] * 0.913),round(self.cord2[3] * 1.07)):
+                self.canvas.delete (self.lvid)
+                self.lvid = self.canvas.create_rectangle (self.cords, fill = self.color, outline = self.color)
 
                 self.num_ = 2**self.pow_
                 self.switc_ = False
 
                 return self.num_
-            
-            else:
-                return None
-                
         else:
-            if heh.x  in range (round(self.cords[0] - self.bbox_pad), round(self.cords[2] + self.bbox_pad)) and heh.y in range (round(self.cords[1] - self.bbox_pad),round(self.cords[3] + self.bbox_pad)):
-                self.canvas.delete (self.actif_)
-                self.actif_ = self.canvas.create_rectangle (self.cords2, fill = self.color2, outline = self.color2)
+            if heh.x in range (round(self.cords[0] * 0.888), round(self.cords[2] * 1.07)) and heh.y in range (round(self.cords[1] * 0.666),round(self.cords[3] * 1.333)):
+                self.canvas.delete (self.lvid)
+                self.lvid = self.canvas.create_rectangle (self.cord2, fill = self.color, outline = self.color)
 
                 self.num_ = 2**self.pow_
                 self.switc_ = True
 
                 return -1*(self.num_)
-
-            else:
-                return None
