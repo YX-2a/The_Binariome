@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, Menu, Label, Button
+from tkinter import Tk, Canvas, Menu, Label, Button, PhotoImage, Toplevel
 from interface import Interface, Lever
 import os
 
@@ -50,26 +50,27 @@ class Level:
         self.w = Tk()
         self.w.resizable (0,0)
         self.can_list = []
+        self.ext = "./levels/"
+        self.dre = os.listdir (self.ext) 
+        self.fname = self.dre[ self.dre.index("Guide_To_Writing.txt") + 1 : ][0]
         
     def about_ (self):
-       self.abt = Tk()
+       self.abt = Toplevel(self.w)
        self.abt.title ("About")
        self.abt.resizable (0,0)
-       abt_text = Label (self.abt, text =" The Binariome ",font = "Serif, 30")
-       abt_text.pack(padx = 20, pady = 10)
        
-       abt_btn = Button (self.abt, text ="Exit",font = "Serif, 15",command = self.abt.destroy)
-       abt_btn.pack(padx = 20, pady = 10)
+       self.img = PhotoImage (file= "./readme_pic/logograph.png").subsample(2, 2)
+       abt_text = Label (self.abt, image = self.img)
 
+       abt_text.pack()
        self.abt.mainloop()
        
     def menu_ (self):
         self.men_  = Menu (self.w)
         self.w.config (menu = self.men_)
-        dir_list = os.listdir ("./levels/")
         men_lev = Menu (self.men_, tearoff = 0)
         
-        for i, btn_lev in enumerate (dir_list [ dir_list.index("Guide_To_Writing.txt") + 1 : ]) :
+        for i, btn_lev in enumerate (self.dre [ self.dre.index("Guide_To_Writing.txt") + 1 : ]) :
             self.btn_i = men_lev.add_radiobutton (label=btn_lev)
             men_lev.entryconfig(i, command=lambda btn_lev=btn_lev: self.next_er(btn_lev))
             
@@ -79,11 +80,13 @@ class Level:
         men_abt.add_command (label="Quit", command = self.w.destroy)
 
         self.men_.add_cascade (menu = men_lev,label="Levels")
+        self.men_.add_command (label="Refresh", command = lambda nibler = self.fname : self.next_er (self.fname) )
         self.men_.add_cascade (menu = men_abt,label="About")
             
     def next_er (self, fname):
         self.reload ()
-        options = read_level ("./levels/" + fname)
+        options = read_level (self.ext + fname)
+        self.fname = fname
         self.make_level (options[0],options[1],options[2],options[3],options[4])
         
     def make_level (self, title, height, width, gl, canl):
