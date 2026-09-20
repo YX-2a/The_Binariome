@@ -2,5 +2,6 @@ Start -> YLFSys ==
 Level Title -> t:{Title}
 Canvas Height -> h:{intiger}
 Canvas Width -> w:{intiger}
+Goal -> g:{intiger}
 Canvases -> {Any Names}:column,row,lever ("l":true,"":false)
 End -> == YLFSys
