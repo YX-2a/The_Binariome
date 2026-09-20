@@ -61,6 +61,7 @@ class Level:
     def about_ (self):
        self.abt = Toplevel(self.w)
        self.abt.title ("About")
+       self.abt.iconphoto (0, self.icon_img)
        self.abt.resizable (0,0)
        
        self.img = PhotoImage (file=self.hlp_img).subsample(2, 2)
