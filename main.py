@@ -15,8 +15,7 @@ if __name__ == "__main__" :
         ,cf_dicts[1]["fg_clr"]
         )
 
-    
-    options = lr.read_level(cf_dicts[0]["lvl_dir"] + cf_dicts[0]["def_lvl"])
-    window.menu_()
-    window.make_level (options[0],options[1],options[2],options[3],options[4])
+    menu = window.menu_()
+    level_menu = menu.nametowidget(menu.entrycget(menu.index("Levels"), "menu"))
+    level_menu.invoke(level_menu.index(cf_dicts[0]["def_lvl"]))
     window.end_()
