@@ -6,8 +6,8 @@ class Lever:
         self.switc_ = False
         
     def create_levers (self,canvas,height,width): ##dont play with switc_ or you will suffer
-        self.cords = [height//2,width*(1/6),height//2 + height//5,width*(1/6) + width//15]
-        self.cords2 = [height//2,width*(4/6),height//2 + height//5,width*(4/6) + width//15]
+        self.cords = [width//2 - width//10,height*(10/13),width//2 + width//10,height*(10/13) + height//8]
+        self.cords2 = [width//2 - width//10,height//10,width//2 + width//10,height//10 + height//8]
         self.color = "#000000"
         self.color2 = self.color
         self.actif_ = canvas.create_rectangle (self.cords, fill = self.color) ## because of this bitch
@@ -41,8 +41,7 @@ class Interface:
         self.color = "#aaaaaa"
         self.color_line = "#909090"
         
-    def create_canvas (self,parent, height, width, side_ # = "top" | "bottom" | "left" | "right"
-                       ):
+    def create_canvas (self,parent, height, width, book, shelf):
         self.can_ = Canvas (parent, height = height, width = width,bg = self.color )
-        self.lien_ = self.can_.create_line (height//2 + height//10,width*(1/6) - width//30,height//2 + height//10,width*(4/6) + width//10,width = 5, fill = self.color_line)
-        self.can_.pack (side = side_)
+        self.lien_ = self.can_.create_line (width//2,height//20,width//2,height - height//20,width = 5, fill = self.color_line)
+        self.can_.grid (column = book,row = shelf)
