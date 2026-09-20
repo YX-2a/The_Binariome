@@ -5,8 +5,10 @@ t:Lever Line
 h:200
 w:300
 
-a:0,0,l
-b:1,0,l
-c:2,0,l
+g:6
+
+a:0,0,l 1
+b:1,0,l 1
+c:2,0,l 0
 
 == YLFSys

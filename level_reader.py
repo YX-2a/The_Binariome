@@ -6,7 +6,7 @@ def read_level (filename):
     with open (filename) as levl:
         levl_raw = levl.readlines ()
 
-    i0, i1, tit, hi, wi, can_list = None,None,None,None,None,[]
+    i0, i1, tit, hi, wi,gl, can_list = None,None,None,None,None,None,[]
 
     for i in levl_raw :
         if "YLFSys ==" in i:
@@ -26,7 +26,8 @@ def read_level (filename):
     tit = levl_uck[0].replace ("t:","")
     hi = int(levl_uck[1].replace ("h:",""))
     wi = int(levl_uck[2].replace ("w:",""))
-    levl_uck = levl_uck[3:]
+    gl = int(levl_uck[3].replace ("g:",""))
+    levl_uck = levl_uck[4:]
 
     for i in levl_uck:
         for car in i:
@@ -41,7 +42,7 @@ def read_level (filename):
         else:
             can_list.append ([ int(i.split(",")[0]),int (i.split(",")[1]), False ] )
             
-    return tit, hi, wi, can_list
+    return tit, hi, wi, gl, can_list
 
 
 class Level:
@@ -83,20 +84,35 @@ class Level:
     def next_er (self, fname):
         self.reload ()
         options = read_level ("./levels/" + fname)
-        self.make_level (options[0],options[1],options[2],options[3])
+        self.make_level (options[0],options[1],options[2],options[3],options[4])
         
-    def make_level (self, title, height, width, canl):
-        self.w.title (title)
+    def make_level (self, title, height, width, gl, canl):
+        self.w.title (title + " | Goal : " + str(gl))
+        self.opera_ = 0
         for ca in canl:
             if ca[2] == True:
                 terface_ = Interface()
-                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
-                Lever().create_levers (terface_.can_,height,width)
+                terface_.create_canvas (self.w,height,width,ca[1],ca[0])
+                lever_= Lever()
+                lever_.create_levers (terface_.can_,height,width,canl.index(ca))
                 self.can_list.append (terface_.can_)
+
+                def handle (heh, lev=lever_):
+                    val =  lev.change_(heh)
+                    if val is not None:
+                        self.opera_ += val
+
+                        if self.opera_ == gl:
+                            self.w.title (title + " | Goal : " + str(gl) + " = " + str(self.opera_))
+
+                        else:
+                            self.w.title (title + " | Goal : " + str(gl) + " ≠ " + str(self.opera_))
+
+                terface_.can_.bind ("<Button-1>", handle)
                     
             else:
                 terface_ = Interface()
-                terface_.create_canvas (self.w,height,width,ca[0],ca[1])
+                terface_.create_canvas (self.w,height,width,ca[1],ca[0])
                 self.can_list.append (terface_.can_)
         
     def reload (self):
