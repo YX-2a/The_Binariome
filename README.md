@@ -1,6 +1,9 @@
 ![Logographe](./readme_pic/logograph.png)
 # The Binariome
-Each Lever Has A Value In The Powers Of 2 ($2^0 = 1, 2^1 = 2, 2^2 = 4$ etc...). Mimicking A Bianary Structure.
-and The Goal Is To Reach A Certain Value.
+A Game About Flipping Levers Which Represent Binary Values and The Goal Is To Find The Correct Combination To Reach The Desired Goal. 
+
+Easily Customizable Level and You Can Make As Many Levels As You Want For Yourself.
+
+Easy Configuration, You Can Change The Level Directory, The Directory of the Images and more.
 
 ![Help Image](./readme_pic/help_pic.png)
